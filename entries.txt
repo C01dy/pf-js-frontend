@@ -1,5 +1,6 @@
+steps: ['race', 'class' ....]
+ 
  STATE: {
-     steps: ['name', 'race', 'class' ....],
      currentStep: 0
  }
 
@@ -7,6 +8,6 @@
      'race': () => { * get array of face urls * }
  }
 
- [Next btn] -> click event -> currentStep + 1  --->  map.get(steps[currentStep])()
+[Next btn] -> click event -> currentStep + 1  --->  map.get(steps[currentStep])()
 
 [Prev btn] -> click event -> currentStep + 1  ---> get steps[currentStep]

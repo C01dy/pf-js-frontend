@@ -4,18 +4,18 @@ export const buildUrl = (...urls) => {
     return new URL(urls.join(''), ROOT_URL)
 }
 
-export const createCharacter = async (character) => {
-    const href = buildUrl('/character').href
-    const res = await fetch(href, {
-        method: 'POST',
+export const fetchApiRequset = async (url, method = 'GET', body, headers = {}) => {
+    const res = await fetch(url, {
+        method,
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            ...headers
         },
-        body: JSON.stringify(character),
-        
-    })
+        body: JSON.stringify(body),
+    })  
 
     const data = await res.json()
-    return data;
+    return data
 }
+
 

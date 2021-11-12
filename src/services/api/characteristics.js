@@ -1,11 +1,8 @@
-import { buildUrl } from "."
+import { buildUrl, fetchApiRequset } from "."
 
-const fetchCharacterData = async (url, options = {}) => {
-    const href = buildUrl('/character', url).href
-    const res = await fetch(href, {
-        method: 'GET',
-        ...options
-    })    
+const fetchCharacterData = async (url) => {
+    const characterUrl = buildUrl('/character', url).href
+    const res = await fetchApiRequset(characterUrl)
 
     const data = await res.json()
     return data
@@ -27,8 +24,8 @@ export const getSkills = async () => {
 }
 
 export const getHistory = async () => {
-    const skills = await fetchCharacterData('/history')
-    return skills
+    const history = await fetchCharacterData('/history')
+    return history
 }
 
 export const getFaces = async () => {

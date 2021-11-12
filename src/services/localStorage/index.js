@@ -1,14 +1,16 @@
-// const 
-
-// export const localStorageService = (obj) => {
-
-// }
-
-const setToLS = (obj, key) => {
+export const setToLS = (obj, key) => {
     const serializedObj = JSON.stringify(obj)
+    const localStorageData = localStorage.getItem(key)
+
+    if (localStorageData) {
+        localStorage.setItem(key, JSON.stringify({...JSON.parse(localStorageData), ...obj}))
+        return
+    }
+    
     localStorage.setItem(key, serializedObj)
 }
 
-const readFromLS = (key) => {
+export const readFromLS = (key) => {
     return JSON.parse(localStorage.getItem(key)) || {}
 }
+
