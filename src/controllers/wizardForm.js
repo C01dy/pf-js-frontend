@@ -1,15 +1,10 @@
-let currentStep = 0;
-import { getClass, getFaces, getHistory, getRaces, getSkills } from '../services/api/characteristics'
+import { getClass, getClothes, getFaces, getHistory, getRaces, getSkills } from '../services/api/characteristics'
 import { renderCheckboxControlls, renderRadioControlls } from '../views';
 
 class WizardFormController {
-    constructor(currentStep) {
-        this.currentStep = currentStep
-    }
-
     async getEntity(method, renderCb) {
         const entities = await method()
-        const entityNames = entities.data.map(({ name }) => name)
+        const entityNames = entities.data.map(data => data?.name || data?.text || data?.url || data?.about)
         renderCb(entityNames)
     }
 
@@ -30,7 +25,11 @@ class WizardFormController {
     }
 
     getFaces() {
-        this.getEntity(getFaces, renderRadioControlls)
+        // this.getEntity(getFaces, renderRadioControlls)
+    }
+
+    getClothes() {
+        // this.getEntity(getClothes, renderRadioControlls)
     }
 
 }

@@ -1,5 +1,6 @@
 import { buildUrl, fetchApiRequset } from "."
 
+
 const fetchCharacterData = async (url) => {
     const characterUrl = buildUrl('/character', url).href
     const data = await fetchApiRequset(characterUrl)

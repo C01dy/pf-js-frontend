@@ -1,6 +1,10 @@
 const $insertFormRoot = document.getElementById('insert-root') 
 
-
+/**
+ * 
+ * @param {string} type - type of dom element
+ * @param {Array<string>} items - Array includes item name for controlls
+ */
 const renderMultiplyControlls = (type, items) => {
     let $dom = document.createElement('div')
 
@@ -8,6 +12,7 @@ const renderMultiplyControlls = (type, items) => {
         let $pickerItem = document.createElement('div');
         let $inputControll = document.createElement('input')
         $inputControll.setAttribute('type', type)
+        if (type === 'radio') $inputControll.setAttribute('name', 'radiobutton')
         let $label = document.createElement('label')
         $label.innerText = item
 
