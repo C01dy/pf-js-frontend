@@ -1,5 +1,5 @@
 import { getClass, getClothes, getFaces, getHistory, getRaces, getSkills } from '../services/api/characteristics'
-import { renderCheckboxControlls, renderRadioControlls } from '../views';
+import { renderCheckboxControlls, renderRadioControlls, renderRadioControllsWithImages } from '../views';
 
 class WizardFormController {
     async getEntity(method, renderCb) {
@@ -25,11 +25,11 @@ class WizardFormController {
     }
 
     getFaces() {
-        // this.getEntity(getFaces, renderRadioControlls)
+        this.getEntity(getFaces, renderRadioControllsWithImages)
     }
 
     getClothes() {
-        // this.getEntity(getClothes, renderRadioControlls)
+        this.getEntity(getClothes, renderRadioControllsWithImages)
     }
 
 }
