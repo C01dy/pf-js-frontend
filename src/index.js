@@ -1,7 +1,9 @@
 import WizardFormController from "./controllers/wizardForm";
 import { createCharacter, getCharacter, updateCharacter } from "./services/api/character"
+import { getAllStats, getClass, getSkills } from "./services/api/characteristics";
 import { collectDataFromForm } from "./services/form";
 import { readFromLocalStorage, setToLocalStorage } from "./services/localStorage";
+import { renderCharacterStats } from "./views";
 
 const nextBtn = document.getElementById('go-next-btn')
 const prevBtn = document.getElementById('go-prev-btn')
@@ -11,6 +13,7 @@ const nameInput = document.getElementById('name-input')
 
 const wizardFormController = new WizardFormController()
 const steps = ['name', 'race', 'class', 'skills', 'history', 'clothes', 'face'];
+
 
 const handleWizardFormController = (step) => {
     switch(steps[step]) {
@@ -36,6 +39,7 @@ const handleWizardFormController = (step) => {
 }
 
 let lastStepG = 0;
+const isLastStep = steps.length - 1;
 
 const firstRender = () => {
     const currentCharacter = readFromLocalStorage('currentCharacter')
@@ -55,10 +59,21 @@ nextBtn.addEventListener('click', (e) => {
     if (readFromLocalStorage('currentCharacter')) {
         updateCharacter(readFromLocalStorage('currentCharacter').id, {
             lastStep: lastStepG + 1,
-            // TODO: collect form data and pass here
-        }).then(({ lastStep }) => {
-            lastStepG = lastStep
-        }).finally(() => handleWizardFormController(lastStepG + 1))
+            [steps[lastStepG + 1]]: collectDataFromForm('character-form')
+        }).then(character => {
+            lastStepG = character.lastStep
+            return character
+        }).then(character => {
+            if (lastStepG === isLastStep) {
+                window.character = character
+                getAllStats(character).then(statsArray => {
+                    // TODO: render character info
+                    console.log(statsArray.map(entry => entry.data))
+                })
+            } else {
+                handleWizardFormController(lastStepG + 1)
+            }
+        })
     } else {
         createCharacter({
             name: nameInput.value,
@@ -72,4 +87,3 @@ nextBtn.addEventListener('click', (e) => {
 
 })
 
-window.collectDataFromForm = collectDataFromForm

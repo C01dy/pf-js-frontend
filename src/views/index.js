@@ -8,10 +8,11 @@ const $insertFormRoot = document.getElementById('insert-root')
 const renderMultiplyControlls = (type, items, hasImage = false) => {
     let $dom = document.createElement('div')
 
-    items.forEach(item => {
+    items.forEach(([name, id]) => {
         let $pickerItem = document.createElement('div');
         let $inputControll = document.createElement('input')
         $inputControll.setAttribute('type', type)
+        $inputControll.setAttribute('data-id', id)
         if (type === 'radio') $inputControll.setAttribute('name', 'radiobutton')
         let $label = document.createElement('label')
 
@@ -19,10 +20,10 @@ const renderMultiplyControlls = (type, items, hasImage = false) => {
             const $img = document.createElement('img')
             $img.style.maxWidth = '150px'
             $img.style.maxHeight = '150px'
-            $img.setAttribute('src', 'http://localhost:3000/' + item)
+            $img.setAttribute('src', 'http://localhost:3000/' + name)
             $label.append($img)
         } else {
-            $label.innerText = item
+            $label.innerText = name
         }
 
         $pickerItem.append($inputControll)
@@ -45,6 +46,13 @@ export const renderRadioControllsWithImages = (items) => {
 
 export const renderCheckboxControlls = (items) => {
     renderMultiplyControlls('checkbox', items)
+}
+
+// TODO: !!!
+export const renderCharacterStats = (stats) => {
+    $insertFormRoot.innerHTML = ''
+    $insertFormRoot.innerHTML = JSON.stringify(stats)
+    window.stats = Object.entries(stats)
 }
 
 export const renderNameControll = () => {

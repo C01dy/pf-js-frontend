@@ -4,7 +4,7 @@ import { renderCheckboxControlls, renderRadioControlls, renderRadioControllsWith
 class WizardFormController {
     async getEntity(method, renderCb) {
         const entities = await method()
-        const entityNames = entities.data.map(data => data?.name || data?.text || data?.url || data?.about)
+        const entityNames = entities.data.map(data => [data?.name || data?.text || data?.url || data?.about, data.id])
         renderCb(entityNames)
     }
 
