@@ -50,9 +50,24 @@ export const renderCheckboxControlls = (items) => {
 
 // TODO: !!!
 export const renderCharacterStats = (stats) => {
+    const $dom = document.createElement('div')
+
+    stats.forEach(stat => {
+        const entryValue = Object.entries(stat)[1][1]
+        const entryKey = Object.entries(stat)[1][0]
+        if (entryValue.includes('images')) {
+            const $img = document.createElement('img')
+            $img.setAttribute('src', 'http://localhost:3000/' + entryValue)
+            $dom.append($img)
+        } else {
+            const $entryNode = document.createElement('div')
+            $entryNode.innerText = entryKey + ': ' + entryValue 
+            $dom.append($entryNode)
+        }
+    })
+
     $insertFormRoot.innerHTML = ''
-    $insertFormRoot.innerHTML = JSON.stringify(stats)
-    window.stats = Object.entries(stats)
+    $insertFormRoot.append($dom)
 }
 
 export const renderNameControll = () => {

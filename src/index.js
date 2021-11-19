@@ -39,14 +39,21 @@ const handleWizardFormController = (step) => {
 }
 
 let lastStepG = 0;
-const isLastStep = steps.length - 1;
+const finalStep = steps.length - 1;
 
 const firstRender = () => {
     const currentCharacter = readFromLocalStorage('currentCharacter')
     if (currentCharacter) {
-        getCharacter(currentCharacter.id).then(({ lastStep }) => {
-            lastStepG = lastStep
-            handleWizardFormController(lastStep + 1)
+        getCharacter(currentCharacter.id).then(character => {
+            lastStepG = character.lastStep
+
+            if (lastStepG === finalStep) {
+                getAllStats(character).then(statsArray => {
+                    renderCharacterStats(statsArray.map(entry => entry.data))
+                })
+            } else {
+                handleWizardFormController(character.lastStep + 1)
+            }
         })
     }
 }
@@ -58,17 +65,15 @@ nextBtn.addEventListener('click', (e) => {
 
     if (readFromLocalStorage('currentCharacter')) {
         updateCharacter(readFromLocalStorage('currentCharacter').id, {
-            lastStep: lastStepG + 1,
+            lastStep: lastStepG === finalStep ? lastStepG : lastStepG + 1,
             [steps[lastStepG + 1]]: collectDataFromForm('character-form')
         }).then(character => {
             lastStepG = character.lastStep
             return character
         }).then(character => {
-            if (lastStepG === isLastStep) {
-                window.character = character
+            if (lastStepG === finalStep) {
                 getAllStats(character).then(statsArray => {
-                    // TODO: render character info
-                    console.log(statsArray.map(entry => entry.data))
+                    renderCharacterStats(statsArray.map(entry => entry.data))
                 })
             } else {
                 handleWizardFormController(lastStepG + 1)
