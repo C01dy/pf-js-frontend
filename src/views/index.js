@@ -48,7 +48,7 @@ export const renderCheckboxControlls = (items) => {
     renderMultiplyControlls('checkbox', items)
 }
 
-// TODO: !!!
+// TODO: fix
 export const renderCharacterStats = (stats) => {
     const $dom = document.createElement('div')
 
@@ -79,5 +79,4 @@ export const renderNameControll = () => {
     $insertFormRoot.innerHTML = ''
     $insertFormRoot.append($dom)
 }
-
 

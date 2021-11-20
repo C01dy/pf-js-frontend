@@ -39,3 +39,7 @@ export const getCharacter = async (id) => {
 
     return data;
 }
+
+export const getCharacterStats = (character) => {
+    
+}

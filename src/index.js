@@ -60,8 +60,20 @@ const firstRender = () => {
 
 firstRender()
 
+prevBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    updateCharacter(readFromLocalStorage('currentCharacter').id, {
+        lastStep: lastStepG - 1,    
+    }).then(character => {
+        lastStepG = character.lastStep
+    }).then(() => {
+        handleWizardFormController(lastStepG + 1)
+    })
+})
+
 nextBtn.addEventListener('click', (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (readFromLocalStorage('currentCharacter')) {
         updateCharacter(readFromLocalStorage('currentCharacter').id, {
@@ -91,4 +103,7 @@ nextBtn.addEventListener('click', (e) => {
     }
 
 })
+
+
+
 
