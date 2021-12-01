@@ -59,11 +59,13 @@ export const getAllStats = (character) => {
     })
 
     return Promise.all(statsPromises)
-    // .then(statsArray => {
-    //     data = statsArray.map(entry => Object.entries(entry)[1])
-    // })
 
-    // return Promise.all(statsPromises).then((entry) => Object.entries(entry.data))
-    return data
+}
 
+
+export const getAllStats1 = async (id) => {
+    console.time("getAllStats aggregation")
+    const characterInfo = await fetchCharacterData('/info/' + id);
+    console.timeEnd("getAllStats aggregation")
+    return characterInfo
 }

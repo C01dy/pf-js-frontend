@@ -1,6 +1,6 @@
 import WizardFormController from "./controllers/wizardForm";
 import { createCharacter, getCharacter, updateCharacter } from "./services/api/character"
-import { getAllStats, getClass, getSkills } from "./services/api/characteristics";
+import { getAllStats } from "./services/api/characteristics";
 import { collectDataFromForm } from "./services/form";
 import { readFromLocalStorage, setToLocalStorage } from "./services/localStorage";
 import { renderCharacterStats } from "./views";
@@ -12,7 +12,7 @@ const nameInput = document.getElementById('name-input')
 
 
 const wizardFormController = new WizardFormController()
-const steps = ['name', 'race', 'class', 'skills', 'history', 'clothes', 'face'];
+const steps = ['race', 'class', 'skills', 'history', 'clothes', 'face'];
 
 
 const handleWizardFormController = (step) => {
@@ -38,18 +38,18 @@ const handleWizardFormController = (step) => {
     }
 }
 
-let lastStepG = 0;
+let lastStepFromServer = 0;
 const finalStep = steps.length - 1;
 
 const firstRender = () => {
     const currentCharacter = readFromLocalStorage('currentCharacter')
     if (currentCharacter) {
-        getCharacter(currentCharacter.id).then(character => {
-            lastStepG = character.lastStep
-
-            if (lastStepG === finalStep) {
-                getAllStats(character).then(statsArray => {
-                    renderCharacterStats(statsArray.map(entry => entry.data))
+        getCharacter(currentCharacter._id).then(character => {
+            lastStepFromServer = character.lastStep
+            if (lastStepFromServer === finalStep) {
+                getAllStats(character).then(data => {
+                    console.timeEnd("getAllStats ---")
+                    renderCharacterStats(data)
                 })
             } else {
                 handleWizardFormController(character.lastStep + 1)
@@ -63,12 +63,12 @@ firstRender()
 prevBtn.addEventListener('click', (e) => {
     e.preventDefault()
 
-    updateCharacter(readFromLocalStorage('currentCharacter').id, {
-        lastStep: lastStepG - 1,    
+    updateCharacter(readFromLocalStorage('currentCharacter')._id, {
+        lastStep: lastStepFromServer - 1,        
     }).then(character => {
-        lastStepG = character.lastStep
+        lastStepFromServer = character.lastStep
     }).then(() => {
-        handleWizardFormController(lastStepG + 1)
+        handleWizardFormController(lastStepFromServer + 1)
     })
 })
 
@@ -76,28 +76,28 @@ nextBtn.addEventListener('click', (e) => {
     e.preventDefault()
 
     if (readFromLocalStorage('currentCharacter')) {
-        updateCharacter(readFromLocalStorage('currentCharacter').id, {
-            lastStep: lastStepG === finalStep ? lastStepG : lastStepG + 1,
-            [steps[lastStepG + 1]]: collectDataFromForm('character-form')
+        updateCharacter(readFromLocalStorage('currentCharacter')._id, {
+            lastStep: lastStepFromServer === finalStep ? lastStepFromServer : lastStepFromServer + 1,
+            [steps[lastStepFromServer + 1]]: collectDataFromForm('character-form')
         }).then(character => {
-            lastStepG = character.lastStep
+            lastStepFromServer = character.lastStep
             return character
-        }).then(character => {
-            if (lastStepG === finalStep) {
-                getAllStats(character).then(statsArray => {
-                    renderCharacterStats(statsArray.map(entry => entry.data))
+        }).then(() => {
+            if (lastStepFromServer === finalStep) {
+                getAllStats(readFromLocalStorage('currentCharacter')._id).then(data => {
+                    renderCharacterStats(data)
                 })
             } else {
-                handleWizardFormController(lastStepG + 1)
+                handleWizardFormController(lastStepFromServer + 1)
             }
         })
     } else {
         createCharacter({
             name: nameInput.value,
             lastStep: 0,
-        }).then(({ id, lastStep }) => {
-            setToLocalStorage('currentCharacter', { id })
-            lastStepG = lastStep
+        }).then(({ _id, lastStep }) => {
+            setToLocalStorage('currentCharacter', { _id })
+            lastStepFromServer = lastStep
             wizardFormController.getRaces()
         })
     }

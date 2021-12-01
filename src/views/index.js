@@ -50,33 +50,64 @@ export const renderCheckboxControlls = (items) => {
 
 // TODO: fix
 export const renderCharacterStats = (stats) => {
-    const $dom = document.createElement('div')
+    const $dom = document.createElement('code')
 
-    stats.forEach(stat => {
-        const entryValue = Object.entries(stat)[1][1]
-        const entryKey = Object.entries(stat)[1][0]
-        if (entryValue.includes('images')) {
-            const $img = document.createElement('img')
-            $img.setAttribute('src', 'http://localhost:3000/' + entryValue)
-            $dom.append($img)
-        } else {
-            const $entryNode = document.createElement('div')
-            $entryNode.innerText = entryKey + ': ' + entryValue 
-            $dom.append($entryNode)
-        }
-    })
+    // stats.forEach(stat => {
+    //     const entryValue = Object.entries(stat)[1][1]
+    //     const entryKey = Object.entries(stat)[1][0]
+    //     if (entryValue.includes('images')) {
+    //         const $img = document.createElement('img')
+    //         $img.setAttribute('src', 'http://localhost:3000/' + entryValue)
+    //         $dom.append($img)
+    //     } else {
+    //         const $entryNode = document.createElement('div')
+    //         $entryNode.innerText = entryKey + ': ' + entryValue 
+    //         $dom.append($entryNode)
+    //     }
+    // })
+
+    
 
     $insertFormRoot.innerHTML = ''
+    $dom.innerHTML = JSON.stringify(stats)
     $insertFormRoot.append($dom)
 }
 
-export const renderNameControll = () => {
-    let $dom = document.createElement('div')
+// export const renderNameControll = () => {
+//     let $dom = document.createElement('div')
 
-    const $input = document.createElement('input')
-    $dom.append($input)
+//     const $input = document.createElement('input')
+//     $dom.append($input)
 
-    $insertFormRoot.innerHTML = ''
-    $insertFormRoot.append($dom)
+//     $insertFormRoot.innerHTML = ''
+//     $insertFormRoot.append($dom)
+// }
+
+export const renderCharactersTable = (characters) => {
+
+    const $table = document.createElement('table')
+    
+    characters.forEach(character => {
+        const $row = document.createElement('row')
+
+        Object.entries(character).forEach(([ propName, value ]) => {
+            if (propName === 'name') {
+                const $td = document.createElement('td')
+                $td.innerText = value
+                $row.append($td)
+            } else if (typeof value === 'object' && !Array.isArray(value)) {
+                const propKey = Object.keys(value)
+                const $td = document.createElement('td')
+                $td.innerText = value[propKey[1]]
+                $row.append($td)
+            } 
+            
+        })
+
+        $table.append($row)
+    })
+
+    document.getElementById('insert-table-node').append($table)
+
 }
 

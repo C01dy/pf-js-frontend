@@ -40,6 +40,10 @@ export const getCharacter = async (id) => {
     return data;
 }
 
-export const getCharacterStats = (character) => {
-    
+export const getAllCharactersStats = async () => {
+    const characterUrl = buildUrl('/character', '/info', '/many').href
+
+    const data = await fetchApiRequset(characterUrl, 'GET')
+
+    return data;
 }

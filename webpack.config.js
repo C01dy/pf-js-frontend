@@ -1,9 +1,24 @@
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const htmlPageNames = ['charactersTable'];
+const htmlPages = htmlPageNames.map(name => {
+  return new HtmlWebpackPlugin({
+    template: `./public/${name}.html`,
+  })
+})
+
+
 module.exports = {  
     mode: 'development',
-    // entry: './src/index.js',
+    entry: {
+      charactersTable: './src/script/characterTable.js',
+      createCharacter: './src/index.js'
+    },
+    output: {
+      filename: '[name].js',
+      path: __dirname + '/dist',
+    },
     module: {
       rules: [
         {
@@ -27,7 +42,14 @@ module.exports = {
     },
     plugins: [
       new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
-  ],
+        filename: 'createCharacter.html',
+        template: './public/index.html',
+        chunks: ['createCharacter']
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'charactersTable.html',
+        template: './public/charactersTable.html',
+        chunks: ['charactersTable']
+      }),
+    ]
 }
