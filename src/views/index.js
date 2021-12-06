@@ -84,22 +84,35 @@ export const renderCharacterStats = (stats) => {
 // }
 
 export const renderCharactersTable = (characters) => {
-
     const $table = document.createElement('table')
+    $table.classList.add("table", "table-striped", "mt-3")
+    const $rowHead = document.createElement('tr')
+
+    const propNames = ['name', 'race', 'class', 'face', 'clothes']
+
+    propNames.forEach(propName => {
+        const $th = document.createElement('th')
+        $th.innerText = propName
+        $rowHead.append($th)
+    });
+
+    $table.append($rowHead)
     
     characters.forEach(character => {
-        const $row = document.createElement('row')
+        const $row = document.createElement('tr')
 
         Object.entries(character).forEach(([ propName, value ]) => {
             if (propName === 'name') {
                 const $td = document.createElement('td')
                 $td.innerText = value
-                $row.append($td)
+                $row.append($td)    
             } else if (typeof value === 'object' && !Array.isArray(value)) {
                 const propKey = Object.keys(value)
                 const $td = document.createElement('td')
-                $td.innerText = value[propKey[1]]
-                $row.append($td)
+                if(propName !== 'history') {
+                    $td.innerText = value[propKey[1]]
+                    $row.append($td)
+                }
             } 
             
         })

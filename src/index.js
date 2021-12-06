@@ -7,13 +7,10 @@ import { renderCharacterStats } from "./views";
 
 const nextBtn = document.getElementById('go-next-btn')
 const prevBtn = document.getElementById('go-prev-btn')
-
 const nameInput = document.getElementById('name-input')
-
 
 const wizardFormController = new WizardFormController()
 const steps = ['race', 'class', 'skills', 'history', 'clothes', 'face'];
-
 
 const handleWizardFormController = (step) => {
     switch(steps[step]) {

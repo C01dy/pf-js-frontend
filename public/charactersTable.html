@@ -11,28 +11,32 @@
             margin: 0;
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 </head>
 <body>
-    <header style="display: flex; align-items: center; height: 40px; background-color: aquamarine; padding: 0 1.5em;">
-        <a href="./createCharacter.html">Home</a>
+    <header class="pl-4 pr-4 pt-3 pb-3 bg-primary">
+        <a class="text-light" href="./createCharacter.html">Home</a>
     </header>
-    <!-- <table id="characters-table">
-        <caption>Characters</caption>
-        <tr>
-            <th>Name</th>
-            <th>Race</th>
-            <th>Class</th>
-            <th>History</th>
-        </tr>
-        <tr>
-            <td>Hastrel</td>
-            <td>Altmer</td>
-            <td>Wizard</td>
-            <td>...</td>
-        </tr>
-    </table> -->
-    <div id="insert-table-node">
-
+    <div id="insert-table-node" class="container">
+        <form action="">
+            <div class="form-row mt-4">
+                <div class="input-group input-group-sm col-md-4">
+                  <input type="text" class="form-control input-sm" id="search-name-input" placeholder="Search by name">
+                </div>
+                <div class="input-group input-group-sm col-md-2">
+                    <select id="sort-select" class="form-control">
+                        <option value="yoyoy">Races A-Z</option>
+                        <option value="">Races Z-A</option>
+                        <option value="">Name A-Z</option>
+                        <option value="">Name Z-A</option>
+                    </select>
+                </div>
+                <div class="input-group input-group-sm col-md-2">
+                    <select id="race-filter" class="form-control">
+                    </select>
+                </div>
+            </div>
+        </form>
     </div>
 
 </body>

@@ -44,12 +44,12 @@ module.exports = {
       new HtmlWebpackPlugin({
         filename: 'createCharacter.html',
         template: './public/index.html',
-        chunks: ['createCharacter']
+        chunks: ['createCharacter'],
       }),
       new HtmlWebpackPlugin({
-        filename: 'charactersTable.html',
+        filename: 'charactersTable.html',        
         template: './public/charactersTable.html',
-        chunks: ['charactersTable']
+        chunks: ['charactersTable'],
       }),
     ]
 }
