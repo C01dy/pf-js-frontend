@@ -17,27 +17,29 @@
     <header class="pl-4 pr-4 pt-3 pb-3 bg-primary">
         <a class="text-light" href="./createCharacter.html">Home</a>
     </header>
-    <div id="insert-table-node" class="container">
+    <div class="container">
         <form action="">
             <div class="form-row mt-4">
                 <div class="input-group input-group-sm col-md-4">
-                  <input type="text" class="form-control input-sm" id="search-name-input" placeholder="Search by name">
+                <input type="text" class="form-control input-sm" id="search-name-input" placeholder="Search by name">
                 </div>
                 <div class="input-group input-group-sm col-md-2">
                     <select id="sort-select" class="form-control">
-                        <option value="yoyoy">Races A-Z</option>
-                        <option value="">Races Z-A</option>
-                        <option value="">Name A-Z</option>
-                        <option value="">Name Z-A</option>
+                        <option value="">Default</option>    
+                        <option value="race-asc">Races A-Z</option>
+                        <option value="race-desc">Races Z-A</option>
+                        <option value="name-asc">Name A-Z</option>
+                        <option value="name-desc">Name Z-A</option>
                     </select>
                 </div>
                 <div class="input-group input-group-sm col-md-2">
                     <select id="race-filter" class="form-control">
+                        <option value="">None</option> 
                     </select>
                 </div>
             </div>
         </form>
+    <div id="insert-table-node"></div>
     </div>
-
 </body>
 </html>

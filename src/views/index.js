@@ -48,7 +48,6 @@ export const renderCheckboxControlls = (items) => {
     renderMultiplyControlls('checkbox', items)
 }
 
-// TODO: fix
 export const renderCharacterStats = (stats) => {
     const $dom = document.createElement('code')
 
@@ -120,7 +119,19 @@ export const renderCharactersTable = (characters) => {
         $table.append($row)
     })
 
+    document.getElementById('insert-table-node').innerHTML = ''
     document.getElementById('insert-table-node').append($table)
 
+}
+
+export const renderRacesOptions = (racesArray) => {
+    const $raceFilterSelect = document.getElementById('race-filter')
+
+    racesArray.forEach(({ id, name }) => {
+        const $selectOption = document.createElement('option')
+        $selectOption.innerText = name
+        $selectOption.value = id
+        $raceFilterSelect.appendChild($selectOption)
+    });
 }
 

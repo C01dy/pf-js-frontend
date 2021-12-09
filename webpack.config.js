@@ -47,8 +47,8 @@ module.exports = {
         chunks: ['createCharacter'],
       }),
       new HtmlWebpackPlugin({
-        filename: 'charactersTable.html',        
-        template: './public/charactersTable.html',
+        filename: 'characters.html',        
+        template: './public/characters.html',
         chunks: ['charactersTable'],
       }),
     ]
