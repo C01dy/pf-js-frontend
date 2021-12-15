@@ -45,5 +45,5 @@ export const getAllCharactersStats = async (queryParams) => {
 
     const data = await fetchApiRequset(characterUrl, 'GET')
 
-    return data;
+    return data[0];
 }
